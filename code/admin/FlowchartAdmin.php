@@ -1,12 +1,20 @@
 <?php
+namespace ChTombleson\Flowchart\Admins;
+
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\Admin\ModelAdmin;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\PermissionProvider;
 
 class FlowchartAdmin extends ModelAdmin implements PermissionProvider
 {
-    public static $managed_models = ['Flowchart'];
+    private static $managed_models = [
+        Flowchart::class,
+    ];
 
-    public static $url_segment = 'flowcharts';
+    private static $url_segment = 'flowcharts';
 
-    public static $menu_title = 'Flowcharts';
+    private static $menu_title = 'Flowcharts';
 
     public function providePermissions()
     {

@@ -1,4 +1,12 @@
 <?php
+namespace ChTombleson\Flowchart\Controllers;
+
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\Control\Controller;
+use ChTombleson\Flowchart\Models\FlowchartVote;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Security\SecurityToken;
+use ChTombleson\Flowchart\Models\FlowchartFeedback;
 
 class FlowchartController extends Controller
 {
@@ -10,7 +18,7 @@ class FlowchartController extends Controller
     {
         $request = $this->getRequest();
 
-        $response = new SS_HTTPResponse();
+        $response = new HTTPResponse();
         $response->addHeader('Content-Type', 'application/json');
 
         if (!$request->isAjax() || !$request->isPost()) {

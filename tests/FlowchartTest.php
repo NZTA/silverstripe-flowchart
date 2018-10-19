@@ -1,5 +1,7 @@
 <?php
 
+namespace ChTombleson\Flowchart\Test;
+
 class FlowchartTest extends SapphireTest
 {
     protected static $fixture_file = 'FlowchartTest.yml';

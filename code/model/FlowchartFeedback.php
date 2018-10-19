@@ -1,14 +1,18 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
 
 class FlowchartFeedback extends DataObject
 {
     private static $db = [
         'IP' => 'Varchar(50)',
-        'Feedback' => 'Text'
+        'Feedback' => 'Text',
     ];
 
     private static $has_one = [
-        'Flowchart' => 'Flowchart'
+        'Flowchart' => Flowchart::class,
     ];
 
     private static $summary_fields = [
@@ -16,7 +20,7 @@ class FlowchartFeedback extends DataObject
         'Feedback'
     ];
 
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = array())
     {
         return false;
     }

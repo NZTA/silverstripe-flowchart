@@ -1,4 +1,15 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\Assets\Image;
+use SilverStripe\ORM\DataObject;
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Security\Permission;
+use ChTombleson\Flowchart\Models\FlowchartResponse;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class FlowchartQuestion extends DataObject
 {
@@ -8,16 +19,16 @@ class FlowchartQuestion extends DataObject
         'Answer' => 'HTMLText',
         'QuestionHeading' => 'Varchar(255)', // The question heading, e.g. Question
         'AnswerHeading' => 'Varchar(255)', // The answer heading, e.g. Final answer
-        'AnswerImageAfterContent' => 'Boolean'
+        'AnswerImageAfterContent' => 'Boolean',
     ];
 
     private static $has_one = [
-        'Flowchart' => 'Flowchart',
-        'AnswerImage' => 'Image'
+        'Flowchart' => Flowchart::class,
+        'AnswerImage' => Image::class,
     ];
 
     private static $many_many = [
-        'Responses' => 'FlowchartResponse'
+        'Responses' => FlowchartResponse::class,
     ];
 
     private static $summary_fields = [
@@ -109,15 +120,15 @@ class FlowchartQuestion extends DataObject
 
     public function getTitle()
     {
-        return sprintf('%d - %s', $this->ID, $this->ContentSummary());
+        return sprintf('%d - %s', $this->ID, $this->getContentSummary());
     }
 
-    public function ContentSummary()
+    public function getContentSummary()
     {
         return strip_tags($this->Content);
     }
 
-    public function InfoSummary()
+    public function getInfoSummary()
     {
         return strip_tags($this->Info);
     }

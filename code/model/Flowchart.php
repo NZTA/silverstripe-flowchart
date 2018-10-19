@@ -1,4 +1,20 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\View\SSViewer;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\View\ArrayData;
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\View\Requirements;
+use ChTombleson\Flowchart\Models\FlowchartVote;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\SecurityToken;
+use ChTombleson\Flowchart\Models\FlowchartFeedback;
+use ChTombleson\Flowchart\Models\FlowchartQuestion;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_Base;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
 
 class Flowchart extends DataObject
 {
@@ -9,9 +25,9 @@ class Flowchart extends DataObject
     ];
 
     private static $has_many = [
-        'Questions' => 'FlowchartQuestion',
-        'Feedback' => 'FlowchartFeedback',
-        'Votes' => 'FlowchartVote',
+        'Questions' => FlowchartQuestion::class,
+        'Feedback' => FlowchartFeedback::class,
+        'Votes' => FlowchartVote::class,
     ];
 
     private static $summary_fields = [
@@ -68,8 +84,8 @@ class Flowchart extends DataObject
             $fields->addFieldsToTab(
                 'Root.Main',
                 [
-                    ReadonlyField::create(null, 'Total Votes', $this->Votes()->count()),
-                    ReadonlyField::Create(null, 'Average Vote', $this->averageVote()),
+                    ReadonlyField::create('TotalVotes', 'Total Votes', $this->Votes()->count()),
+                    ReadonlyField::Create('AvergageVote', 'Average Vote', $this->averageVote()),
                 ]
             );
         }
@@ -77,14 +93,14 @@ class Flowchart extends DataObject
         if ($this->ID) {
             $fields->addFieldToTab(
                 'Root.Main',
-                ReadonlyField::create(null, 'Shortcode', $this->Shortcode())
+                ReadonlyField::create('ShortCode', 'Shortcode', $this->getShortcode())
             );
         }
 
         return $fields;
     }
 
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = array())
     {
         return Permission::checkMember($member, ['EDIT_FLOWCHART']);
     }
@@ -94,7 +110,7 @@ class Flowchart extends DataObject
         return Permission::checkMember($member, ['EDIT_FLOWCHART']);
     }
 
-    public function Shortcode()
+    public function getShortcode()
     {
         return '[flowchart id="' . $this->ID . '"]';
     }
@@ -105,6 +121,10 @@ class Flowchart extends DataObject
 
         foreach ($this->Votes() as $vote) {
             $total += $vote->Value;
+        }
+
+        if ($total == 0) {
+            return 0;
         }
 
         return $total / $this->Votes()->count();

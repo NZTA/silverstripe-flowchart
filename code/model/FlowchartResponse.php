@@ -1,4 +1,12 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Security\Permission;
+use ChTombleson\Flowchart\Models\FlowchartQuestion;
 
 class FlowchartResponse extends DataObject
 {
@@ -7,12 +15,12 @@ class FlowchartResponse extends DataObject
     ];
 
     private static $has_one = [
-        'PreviousQuestion' => 'FlowchartQuestion',
-        'NextQuestion' => 'FlowchartQuestion',
+        'PreviousQuestion' => FlowchartQuestion::class,
+        'NextQuestion' => FlowchartQuestion::class,
     ];
 
     private static $belongs_many_many = [
-        'Questions' => 'FlowchartQuestion'
+        'Questions' => FlowchartQuestion::class
     ];
 
     private static $summary_fields = [
@@ -74,7 +82,7 @@ class FlowchartResponse extends DataObject
         }
     }
 
-    public function NextQuestionNice()
+    public function getNextQuestionNice()
     {
         if ($this->NextQuestionID) {
             return $this->NextQuestion()->Title();
