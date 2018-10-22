@@ -10,24 +10,39 @@ use ChTombleson\Flowchart\Models\FlowchartQuestion;
 
 class FlowchartResponse extends DataObject
 {
+    /**
+     * @var array
+     */
     private static $db = [
         'Label' => 'Varchar(120)', // Yes, No, Maybe
     ];
 
+    /**
+     * @var array
+     */
     private static $has_one = [
         'PreviousQuestion' => FlowchartQuestion::class,
         'NextQuestion' => FlowchartQuestion::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $belongs_many_many = [
         'Questions' => FlowchartQuestion::class
     ];
 
+    /**
+     * @var array
+     */
     private static $summary_fields = [
         'Label' => 'Label',
         'NextQuestionNice' => 'Linked question'
     ];
 
+    /**
+     * @inheritdoc
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -68,11 +83,17 @@ class FlowchartResponse extends DataObject
         return $fields;
     }
 
+    /**
+     * @return string
+     */
     public function Title()
     {
         return $this->getTitle();
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         if ($this->NextQuestionID) {
@@ -82,6 +103,9 @@ class FlowchartResponse extends DataObject
         }
     }
 
+    /**
+     * @return string
+     */
     public function getNextQuestionNice()
     {
         if ($this->NextQuestionID) {
@@ -91,6 +115,9 @@ class FlowchartResponse extends DataObject
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function validate()
     {
         $result = parent::validate();
@@ -102,11 +129,17 @@ class FlowchartResponse extends DataObject
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canView($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canEdit($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));

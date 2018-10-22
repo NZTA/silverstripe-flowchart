@@ -39,6 +39,7 @@
 
 .flowchart__form {
     display: none;
+    clear: both;
 }
 
 .flowchart__form fieldset {

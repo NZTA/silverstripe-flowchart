@@ -3,13 +3,24 @@
     "description": "Flowchart silverstripe module.",
     "type": "silverstripe-vendormodule",
     "keywords": ["silverstripe"],
-    "minimum-stability": "dev",
     "license": "BSD-3-Clause",
     "require": {
-        "silverstripe/cms": "^4.0",
-        "silverstripe/framework": "^4.0"
+        "silverstripe/cms": "^4",
+        "silverstripe/framework": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChTombleson\\Flowchart\\": "src/",
+            "ChTombleson\\Flowchart\\Tests\\": "tests/"
+        }
     },
     "extra": {
+        "expose": [
+            "css",
+            "js"
+        ],
         "installer-name": "silverstripe-flowchart"
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }

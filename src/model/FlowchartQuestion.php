@@ -13,6 +13,9 @@ use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class FlowchartQuestion extends DataObject
 {
+    /**
+     * @var array
+     */
     private static $db = [
         'Content' => 'HTMLText',
         'Info' => 'HTMLText',
@@ -22,15 +25,24 @@ class FlowchartQuestion extends DataObject
         'AnswerImageAfterContent' => 'Boolean',
     ];
 
+    /**
+     * @var array
+     */
     private static $has_one = [
         'Flowchart' => Flowchart::class,
         'AnswerImage' => Image::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $many_many = [
         'Responses' => FlowchartResponse::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $summary_fields = [
         'ID' => 'ID',
         'ContentSummary' => 'Question summary',
@@ -39,8 +51,14 @@ class FlowchartQuestion extends DataObject
         'AnswerSummary' => 'Answer summary'
     ];
 
+    /**
+     * @var string
+     */
     private static $flowcharts_asset_folder = 'flowcharts';
 
+    /**
+     * @inheritdoc
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -113,46 +131,73 @@ class FlowchartQuestion extends DataObject
         return $fields;
     }
 
+    /**
+     * @return string
+     */
     public function Title()
     {
         return $this->getTitle();
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return sprintf('%d - %s', $this->ID, $this->getContentSummary());
     }
 
+    /**
+     * @return string
+     */
     public function getContentSummary()
     {
         return strip_tags($this->Content);
     }
 
+    /**
+     * @return string
+     */
     public function getInfoSummary()
     {
         return strip_tags($this->Info);
     }
 
+    /**
+     * @return string
+     */
     public function AnswerSummary()
     {
         return strip_tags($this->Answer);
     }
 
+    /**
+     * @return string
+     */
     public function FolderName()
     {
         return static::$flowcharts_asset_folder;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canView($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canEdit($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
     }
 
+    /**
+     * @return boolean
+     */
     public function hasAnswer()
     {
         return !empty($this->Answer);

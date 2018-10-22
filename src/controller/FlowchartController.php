@@ -10,10 +10,16 @@ use ChTombleson\Flowchart\Models\FlowchartFeedback;
 
 class FlowchartController extends Controller
 {
+    /**
+     * @var array
+     */
     private static $allowed_actions = [
         'Form',
     ];
 
+    /**
+     * @return HTTPResponse
+     */
     public function form()
     {
         $request = $this->getRequest();

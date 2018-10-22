@@ -2,6 +2,6 @@
 Name: flowchartroutes
 After: framework/routes#coreroutes
 ---
-Director:
+SilverStripe\Control\Director:
   rules:
     '_flowchart//$Action': 'ChTombleson\Flowchart\Controllers\FlowchartController'
