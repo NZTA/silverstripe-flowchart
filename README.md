@@ -6,6 +6,8 @@ A module to create an interactive flowchart.
 
     $ composer require chtombleson/silverstripe-flowchart
 
+For SilverStripe 3 use the 3x branch.
+
 ## Usage
 
 Once installed and the dev/build has been run. In the CMS there should be a Flowcharts
