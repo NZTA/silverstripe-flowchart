@@ -176,7 +176,7 @@ class FlowchartQuestion extends DataObject
      */
     public function FolderName()
     {
-        return static::$flowcharts_asset_folder;
+        return self::$flowcharts_asset_folder;
     }
 
     /**
