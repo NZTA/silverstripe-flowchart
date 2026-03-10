@@ -1,3 +1,10 @@
+> [!CAUTION]
+> # Abandoned
+>
+> Use the original/"upstream" module instead. This fork offers neither fixes nor extra functionality.
+> 
+> https://github.com/chtombleson/silverstripe-flowchart
+
 # Silverstripe Flowchart
 
 A module to create an interactive flowchart.
